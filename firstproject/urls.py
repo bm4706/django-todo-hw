@@ -23,5 +23,5 @@ def pingpong(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('path/',pingpong)
+    path('ping/',pingpong)
 ]
