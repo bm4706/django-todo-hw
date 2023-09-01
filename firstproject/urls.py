@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
+
+def pingpong(request):
+    return HttpResponse('pong')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('path/',pingpong)
 ]
