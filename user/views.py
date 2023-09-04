@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from user.models import User
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 
 @csrf_exempt
@@ -28,16 +28,25 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             # return redirect("/user/loginok/")
-            return redirect("/todo/)
+            return redirect("/todo/")
         else:
             return HttpResponse("타당하지않은", status=401)
     elif request.method == "GET":
         return render(request, "user/login.html")
     else:
         return HttpResponse("타당하지않은", status=405)    
+
+def logout(request):
+    if request.method == "POST":
+        auth_logout(request)
+        return redirect("/todo/")
+    else:
+        return HttpResponse("타당하지않은", status=401)
+
+
     
-def loginok(request):
-    print(request.user)
-    # m ="로그인 성공!"
-    return HttpResponse(request.user)
-    # return HttpResponse(m) # 로그인 성공이라는걸 만들어보고싶어서 넣은 기능
+# def loginok(request):
+#     auth_logout(request)
+#     # m ="로그인 성공!"
+#     return HttpResponse(request.user)
+#     # return HttpResponse(m) # 로그인 성공이라는걸 만들어보고싶어서 넣은 기능

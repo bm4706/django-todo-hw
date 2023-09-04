@@ -1,6 +1,7 @@
 from django.db import models
 
 class Todo(models.Model):
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE) #유저 아이디가 삭제된다면 cascade는 글 전부 삭제
     # title = models.CharField(max_length=100)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True) # 생성시

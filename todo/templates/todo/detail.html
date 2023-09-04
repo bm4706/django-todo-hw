@@ -12,6 +12,7 @@
         <h1>{{todo.content}}</h1>
         <p>{{todo.created_at}}</p>
         <p>{{todo.updated_at}}</p>
+        <p>{{todo.user_id}}</p>
 
         <form action="/todo/delete/{{todo.id}}/" method="post">
             {% csrf_token %}
