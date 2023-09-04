@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index</title>
+</head>
+
+<body>
+    <h1>index1</h1>
+    <h2>안녕하세요 {name}님</h2>
+    <form action="/getdata/" method="POST">
+        {% csrf_token %}
+        <input type="text" name="todo" />
+        <input type="text" name="todo2" />
+        <input type="text" name="todo3" />
+
+        <button type="sumbit">제출</button>
+    </form>
+</body>
+
+</html>

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.http import HttpResponse
-from django.urls import include, path
+from django.urls import path
 
 from . import views
 # def pingpong(request):
@@ -35,10 +35,10 @@ from . import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('ping/',views.pingpong),
-    path('index/', views.index),
-    path('getdata/',views.getdata),
-    path('todo/', include("todo.urls")),
-    path('user/', include("user.urls"))
+    path('', views.index),
+    path('create/', views.create),
+    # path('create_page/', views.create_page), #합쳤으니 주석처리
+    path('<int:todo_id>/', views.read),
+    path('delete/<int:todo_id>/', views.delete),
+    path('update/<int:todo_id>/', views.update),
 ]
