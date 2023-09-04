@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 from todo.models import Todo
 
@@ -17,7 +18,7 @@ def index(request):
         return HttpResponse("타당하지않은", status=405)
 # Create your views here.
 
-@csrf_exempt
+
 # def create(request):
 #     # print(request.POST) # post로 내가 원하는 값을 넣을수잇께함
 #     Todo.objects.create(content=request.POST["content"])
@@ -27,15 +28,20 @@ def index(request):
 #     return render(request, "todo/create.html")
 
 # 하나로 합치기 위해
+
+@login_required(login_url='/user/login/') # 이거는 아래 if구문 로그인여부에따라 글작성 여부를 한줄로 줄임
+@csrf_exempt
 def create(request):
-    if request.method == "POST":
-        Todo.objects.create(content=request.POST["content"], user=request.user)
-        return redirect("/todo/")
-    elif request.method == "GET":
-        return render(request, "todo/create.html")
-    else:
-        return HttpResponse("타당하지않은", status=405)
-    
+    # if request.user.is_authenticated: # 로그인 되어있을때 글 작성 가능하게 하기
+        if request.method == "POST":
+            Todo.objects.create(content=request.POST["content"], user=request.user)
+            return redirect("/todo/")
+        elif request.method == "GET":
+            return render(request, "todo/create.html")
+        else:
+            return HttpResponse("타당하지않은", status=405)
+    # else: # 로그인 안한상태로 글 작성할려면 로그인 페이지로 넘겨주기
+    #     return  redirect("/user/login/")
 def read(request, todo_id):
     todo = Todo.objects.get(id=todo_id)
     context = {
