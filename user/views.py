@@ -27,7 +27,8 @@ def login(request):
         user = authenticate(request, username=username, password=password) # 아이디가 없으면 none값을 리턴
         if user is not None:
             auth_login(request, user)
-            return redirect("/todo/")
+            # return redirect("/user/loginok/")
+            return redirect("/todo/)
         else:
             return HttpResponse("타당하지않은", status=401)
     elif request.method == "GET":
@@ -35,3 +36,8 @@ def login(request):
     else:
         return HttpResponse("타당하지않은", status=405)    
     
+def loginok(request):
+    print(request.user)
+    # m ="로그인 성공!"
+    return HttpResponse(request.user)
+    # return HttpResponse(m) # 로그인 성공이라는걸 만들어보고싶어서 넣은 기능
