@@ -53,8 +53,13 @@ def read(request, todo_id):
 def delete(request, todo_id):
     if request.method == "POST":
         todo = Todo.objects.get(id=todo_id)
-        todo.delete()
-        return redirect("/todo/")
+        # 백엔드에서도 삭제하기 못하게 추가
+        if request.user == todo.user:
+            
+            todo.delete()
+            return redirect("/todo/")
+        else:
+            return HttpResponse("타당하지않은", status=405)
     else:
         return HttpResponse("타당하지않은", status=405)
     
@@ -62,9 +67,13 @@ def delete(request, todo_id):
 def update(request, todo_id):
     if request.method == "POST":
         todo = Todo.objects.get(id=todo_id)
-        todo.content = request.POST["content"]
-        todo.save() # db에 저장해줘야함
-        return redirect(f"/todo/{todo_id}/")
+        # 백엔드에서 수정못하게 막기
+        if request.user == todo.user:
+            todo.content = request.POST["content"]
+            todo.save() # db에 저장해줘야함
+            return redirect(f"/todo/{todo_id}/")
+        else:
+            return HttpResponse("타당하지않은", status=405)
     elif request.method == "GET":
         todo = Todo.objects.get(id=todo_id)
         context = {
