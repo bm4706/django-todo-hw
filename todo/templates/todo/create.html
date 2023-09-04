@@ -9,9 +9,11 @@
 
 <body>
     <h1>여기에서 todo작성해주세요</h1>
-    <form action="/todo/create/" method="post">
+    <!-- 이미지같은경우 인코딩타입을 따로 설정해줘야함 -->
+    <form action="/todo/create/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
+        <!-- 사진 및 파일 추가 -->
+        <input type="file" name="image">
         <input type="text" name="content" id="content">
         <button type="submit">만들기</button>
     </form>

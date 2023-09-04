@@ -33,13 +33,16 @@ def index(request):
 @csrf_exempt
 def create(request):
     # if request.user.is_authenticated: # 로그인 되어있을때 글 작성 가능하게 하기
-        if request.method == "POST":
-            Todo.objects.create(content=request.POST["content"], user=request.user)
-            return redirect("/todo/")
-        elif request.method == "GET":
-            return render(request, "todo/create.html")
-        else:
-            return HttpResponse("타당하지않은", status=405)
+    if request.method == "POST":
+        # 이미지 파일 추가  image=request.FILES.get("image")
+        Todo.objects.create(content=request.POST["content"],
+                            user=request.user, 
+                            image=request.FILES.get("image"))
+        return redirect("/todo/")
+    elif request.method == "GET":
+        return render(request, "todo/create.html")
+    else:
+        return HttpResponse("타당하지않은", status=405)
     # else: # 로그인 안한상태로 글 작성할려면 로그인 페이지로 넘겨주기
     #     return  redirect("/user/login/")
 def read(request, todo_id):
