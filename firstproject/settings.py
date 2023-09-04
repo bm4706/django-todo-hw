@@ -24,7 +24,8 @@ SECRET_KEY = 'django-insecure-c=bfaahk5^%!n(6w4a_x)7$ix$3(2=%5wp#b+&%=q)syp%ccjw
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+# ture일때는 개발중이므로 이미지 파일을 바꾸기 위해서는 특수한걸 해야함
+# https://docs.djangoproject.com/ko/4.2/howto/static-files/
 ALLOWED_HOSTS = []
 
 

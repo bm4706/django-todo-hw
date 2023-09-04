@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from . import views
 # def pingpong(request):
@@ -41,4 +43,5 @@ urlpatterns = [
     path('getdata/',views.getdata),
     path('todo/', include("todo.urls")),
     path('user/', include("user.urls"))
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# 개발중일떄 debug=true 일때 이미지 추가하면 보여주는 식
